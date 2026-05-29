@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7906824503370131118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7906824503370131120}
+  - component: {fileID: 7906824503370131121}
+  m_Layer: 0
+  m_Name: Artillery
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7906824503370131120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7906824503370131118}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.18, y: 8.13, z: -15.98}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7906824503370131121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7906824503370131118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd754217c95e094dba21ec3cb09b516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseProjectileConfig:
+    spawnPosition: {x: 0, y: 0, z: 0}
+    direction: {x: 0, y: 0, z: 1}
+    speed: 10
+    speedMultiplier: 1
+    initialW: 0
+    wSpeed: 0
+    scaleW: 1
+    initialRotationW: {x: 0, y: 0, z: 0}
+    enableRotation: 0
+    rotationSpeed3D: {x: 0, y: 0, z: 0}
+    rotationSpeedW: {x: 0, y: 0, z: 0}
+    bounceAtBounds: 0
+    boundsMin: {x: -10, y: -10, z: -10}
+    boundsMax: {x: 10, y: 10, z: 10}
+    boundsWMin: -10
+    boundsWMax: 10
+    triggerRadius: 1.5
+    oneShotTrigger: 0
+    continuousTrigger: 1
+    lifetime: 10
+    maxDistance: 100
+    returnOnPlayerHit: 1
+    returnDelay: 0.5
+    overrideShapeColor: 0
+    shapeColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideShapeType: 0
+    shapeType: 0
+  fireInterval: 2
+  autoStart: 1
+  startDelay: 0
+  activeInterval: {x: 0, y: 0}
+  firePattern:
+    id: 0
+  patternType: 0
+  fanPattern:
+    fanAngle: 30
+    fanCount: 5
+    spreadAngle: 0
+  circlePattern:
+    circleRadius: 2
+    circleCount: 8
+  spiralPattern:
+    circleRadius: 2
+    circleCount: 8
+    spiralWaves: 3
+  wavePattern:
+    fanAngle: 30
+    fanCount: 5
+    waveFrequency: 2
+    waveAmplitude: 0.3
+  random360Pattern:
+    projectileCount: 8
+  shotgunPattern:
+    pelletCount: 8
+    spreadAngle: 30
+  references:
+    version: 1
+    00000000:
+      type: {class: SingleFirePattern, ns: , asm: Assembly-CSharp}
