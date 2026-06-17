@@ -1,5 +1,4 @@
-﻿//
-
+﻿
 Shader "Raymarch/RaymarchCam"
 {
     Properties
@@ -8,7 +7,6 @@ Shader "Raymarch/RaymarchCam"
     }
     SubShader
     {
-        // No culling or depth
         Cull Off ZWrite Off ZTest Always
 
         Pass
@@ -18,11 +16,9 @@ Shader "Raymarch/RaymarchCam"
             #pragma fragment frag
 
             #include "UnityCG.cginc"
-            // the distancefuctions are located on another script
 
             #include "DistanceFunctions.cginc"
 
-            // All the variables feeded through the camera
 
             sampler2D _MainTex;
             uniform sampler2D _CameraDepthTexture;
@@ -96,7 +92,6 @@ Shader "Raymarch/RaymarchCam"
                 return o;
             }
 
-            // the distancefunction for the fractals
             float GetShapeDistance(Shape shape, float4 p4D) {
 
                 p4D -= shape.position;
@@ -165,7 +160,7 @@ Shader "Raymarch/RaymarchCam"
                         localColour = combined.xyz;
                         localDst = combined.w;
                     }
-                    i+=numChildren; // skip over children in outer loop
+                    i+=numChildren;
 
                     float4 globalCombined = Combine(globalDst, localDst, globalColour, localColour, shape.operation, shape.blendStrength);
                     globalColour = globalCombined.xyz;
@@ -177,7 +172,6 @@ Shader "Raymarch/RaymarchCam"
             }
 
 
-            // returns the normal in a single point of the fractal
 
             float3 getNormal(float3 p)
             {
@@ -189,7 +183,6 @@ Shader "Raymarch/RaymarchCam"
 
             }
 
-            // calcutates hard shadows in a point
 
             float hardShadowCalc( in float3 ro, in float3 rd, float mint, float maxt)
             {
@@ -204,7 +197,6 @@ Shader "Raymarch/RaymarchCam"
                 return res;
             }
 
-            // calcutates soft shadows in a point
 
             float softShadowCalc( in float3 ro, in float3 rd, float mint, float maxt, float k )
             {
@@ -224,48 +216,42 @@ Shader "Raymarch/RaymarchCam"
                 return res;
             }
 
-            // the actual raymarcher
             fixed4 raymarching(float3 ro, float3 rd, float depth)
             {
 
-                fixed4 result = fixed4(0,0,0,0.5); // default
+                fixed4 result = fixed4(0,0,0,0.5);
 
-                float t = 0; //distance traveled
+                float t = 0;
 
 
                 for (int i = 0; i < _max_iteration; i++)
                 {
-                    //sends out ray from the camera
                     float3 p = ro + rd * t;
 
 
 
-                    // check if to far
                     if(t > _maxDistance || t >= depth)
                     {
 
-                        //environment
                         result = fixed4(rd,0);
                         break;
 
                     }
 
-                    //return distance to fractal
                     float4 d = (distanceField(p));
 
 
-                    if ((d.x) < _precision) //hit
+                    if ((d.x) < _precision)
                     {
                         float3 colorDepth;
                         float light;
                         float shadow;
-                        //shading
 
                         float3 color = d.yzw;
 
                         if(_useNormal == 1){
                             float3 n = getNormal(p);
-                            light = dot(-_lightDir, n); //lambertian shading
+                            light = dot(-_lightDir, n);
                             if(_nrOfCascades > 0){
                                 light = floor(light * _nrOfCascades + 1)/(float)(_nrOfCascades);
                             }
@@ -275,21 +261,20 @@ Shader "Raymarch/RaymarchCam"
                         else  light = 1;
 
                         if(_useShadow == 1){
-                             shadow = (hardShadowCalc(p, -_lightDir, 0.1, _maxShadowDistance) * (1 - _shadowIntensity) + _shadowIntensity); // soft shadows
+                             shadow = (hardShadowCalc(p, -_lightDir, 0.1, _maxShadowDistance) * (1 - _shadowIntensity) + _shadowIntensity);
 
                         }
                         else if(_useShadow == 2){
-                            shadow = (softShadowCalc(p, -_lightDir, 0.1, _maxShadowDistance, _shadowSoftness) * (1 - _shadowIntensity) + _shadowIntensity); // soft shadows
+                            shadow = (softShadowCalc(p, -_lightDir, 0.1, _maxShadowDistance, _shadowSoftness) * (1 - _shadowIntensity) + _shadowIntensity);
                         }
                         else  shadow = 1;
 
-                        float ao = (1 - 2 * i/float(_max_iteration)) * (1 - _aoIntensity) + _aoIntensity; // ambient occlusion
+                        float ao = (1 - 2 * i/float(_max_iteration)) * (1 - _aoIntensity) + _aoIntensity;
 
-                        float3 colorLight = float3 (color * light * shadow * ao); // multiplying all values between 0 and 1 to return final color
+                        float3 colorLight = float3 (color * light * shadow * ao);
 
-                        colorDepth = float3 (colorLight*(_maxDistance-t)/(_maxDistance) + _skyColor.rgb*(t)/(_maxDistance)); // multiplying with distance
+                        colorDepth = float3 (colorLight*(_maxDistance-t)/(_maxDistance) + _skyColor.rgb*(t)/(_maxDistance));
 
-                        //colorDepth = pow( colorDepth, (1.0/2.2) );
                         result = fixed4(colorDepth ,1);
                         break;
 
@@ -302,7 +287,6 @@ Shader "Raymarch/RaymarchCam"
 
                 return result;
             }
-            // the fragment shader
             fixed4 frag (v2f i) : SV_Target
             {
                float depth = LinearEyeDepth(tex2D(_CameraDepthTexture, i.uv).r);

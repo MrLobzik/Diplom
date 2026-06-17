@@ -3,9 +3,6 @@
 using UnityEditor;
 #endif
 
-// ****************** Shows the Raymarched objects in the sceneview ****************** 
-
-
 public class SceneViewFilter : MonoBehaviour
 {
 #if UNITY_EDITOR
@@ -27,12 +24,9 @@ public class SceneViewFilter : MonoBehaviour
             return;
         if (!Camera.main)
             return;
-        // Get a list of everything on the main camera that should be synced.
         SceneViewFilter[] cameraFilters = Camera.main.GetComponents<SceneViewFilter>();
         SceneViewFilter[] sceneFilters = sv.camera.GetComponents<SceneViewFilter>();
 
-        // Let's see if the lists are different lengths or something like that. 
-        // If so, we simply destroy all scene filters and recreate from maincamera
         if (cameraFilters.Length != sceneFilters.Length)
         {
             Recreate(sv);
@@ -47,8 +41,6 @@ public class SceneViewFilter : MonoBehaviour
             }
         }
 
-        // Ok, WHICH filters, or their order hasn't changed.
-        // Let's copy all settings for any filter that has changed.
         for (int i = 0; i < cameraFilters.Length; i++)
             if (cameraFilters[i].hasChanged || sceneFilters[i].enabled != cameraFilters[i].enabled)
             {

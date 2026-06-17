@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     private float coyoteTimeCounter;
     private bool isGrounded;
 
-    // Для внешнего управления скоростью (батуты и т.д.)
+    // Для внешнего управления скоростью (батуты)
     private Vector3 externalVelocity;
     private float externalWVelocity;
     private bool hasExternalVelocity;

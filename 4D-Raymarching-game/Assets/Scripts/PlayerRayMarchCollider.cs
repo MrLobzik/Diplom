@@ -188,7 +188,6 @@ namespace Unity.Mathematics
 
                 if (d < 0)
                 {
-                    //Debug.Log("hit" + i);
                     nrHits++;
                     transform.Translate(ro[i].forward * d * 1.5f, Space.World);
                 }

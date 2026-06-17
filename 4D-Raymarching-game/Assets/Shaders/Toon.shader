@@ -1,6 +1,4 @@
-﻿//shader from: https://roystan.net/articles/toon-shader.html
-
-Shader "Stylized/Toon"
+﻿Shader "Stylized/Toon"
 {
 	Properties
 	{

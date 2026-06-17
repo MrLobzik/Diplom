@@ -36,12 +36,10 @@ public class Trampoline4D : MonoBehaviour
     private bool isBouncing;
     private float bounceTimer;
 
-    // Этот метод подключается к Shape4DTrigger.OnTriggerEnter
     public void Bounce(Transform player)
     {
         if (player == null) return;
 
-        // Ищем PlayerController у игрока или его родителя
         if (playerController == null)
         {
             playerController = player.GetComponent<PlayerController>();
@@ -57,10 +55,8 @@ public class Trampoline4D : MonoBehaviour
         }
     }
 
-    // Этот метод подключается к Shape4DTrigger.OnTriggerStay
     public void BounceStay(Transform player)
     {
-        // Можно добавить постоянное ускорение пока игрок в зоне
         if (player != null && playerController != null)
         {
             // Опционально: постоянная сила пока игрок в триггере
